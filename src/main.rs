@@ -173,8 +173,31 @@ fn main() {
 
 		// == // Set up your VAO around here
 		
-		let vertices: Vec<f32> = vec![-0.6, -0.6, 0.0, 0.6, -0.6, 0.0, 0.0, 0.6, 0.0];
-		let indices = vec![0,1,2,3,4,5,6,7,8];
+		let vertices: Vec<f32> = vec![
+			-1.0,  0.6,  0.0,
+			-0.6,  0.6,  0.0, // Connecting vertex
+			-0.8,  1.0,  0.0, 
+			
+			-0.2,  0.6,  0.0, // x: 1 + 0.4 and connecting vertex
+			-0.4,  1.0,  0.0, // x: 2 + 0.4
+			
+			 0.2,  0.6,  0.0, // x: 3 + 0.4 and connecting vertex
+			 0.0,  1.0,  0.0, // x: 4 + 0.4
+
+			 0.6,  0.6,  0.0, // x: 5 + 0.4 and connecting vertex
+			 0.4,  1.0,  0.0, // x: 6 + 0.4
+			 
+			 1.0,  0.6,  0.0, // x: 7 + 0.4 and connecting vertex
+			 0.8,  1.0,  0.0, // x: 8 + 0.4
+
+		];
+		let indices = vec![
+			0,1,2,
+			1,3,4,
+			3,5,6,
+			5,7,8,
+			7,9,10
+		];
 		let my_vao = unsafe { create_vao(&vertices, &indices) };
 
 
@@ -261,7 +284,7 @@ fn main() {
 
 				// == // Issue the necessary gl:: commands to draw your scene here
 				gl::BindVertexArray(my_vao);
-				gl::DrawElements(gl::TRIANGLES, 1*3, gl::UNSIGNED_INT, offset::<u32>(0));
+				gl::DrawElements(gl::TRIANGLES, (indices.len() as i32)*3, gl::UNSIGNED_INT, ptr::null());
 				simple_shader.activate();
 			}
 
